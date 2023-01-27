@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weight to Plate</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js"></script>
+</head>
+
+<body>
+  <h1>Weight to Plate</h1>
+  <label for="target-load">Target Weight Load</label>
+  <input type="text" id="target-load" name="target-load" />
+  <span>Lb</span>
+  <div class="adjust-weight-container">
+    <div class="row col-headers">
+      <p>Weight</p>
+      <p>Per Side</p>
+      <p>Total</p>
+      <p>Include?</p>
+    </div>
+    <div class="row weight-45">
+      <p>45</p>
+      <div class="counter">
+        <button>-</button>
+        <input type="text" />
+        <button>+</button>
+      </div>
+      <input type="text" />
+      <input type="checkbox" />
+    </div>
+    <div class="row weight-35">
+      <p>35</p>
+      <div class="counter">
+        <button>-</button>
+        <input type="text" />
+        <button>+</button>
+      </div>
+      <input type="text" />
+      <input type="checkbox" />
+    </div>
+    <div class="row weight-25">
+      <p>25</p>
+      <div class="counter">
+        <button>-</button>
+        <input type="text" />
+        <button>+</button>
+      </div>
+      <input type="text" />
+      <input type="checkbox" />
+    </div>
+    <div class="row weight-10">
+      <p>10</p>
+      <div class="counter">
+        <button>-</button>
+        <input type="text" />
+        <button>+</button>
+      </div>
+      <input type="text" />
+      <input type="checkbox" />
+    </div>
+    <div class="row weight-5">
+      <p>5</p>
+      <div class="counter">
+        <button>-</button>
+        <input type="text" />
+        <button>+</button>
+      </div>
+      <input type="text" />
+      <input type="checkbox" />
+    </div>
+    <div class="row weight-2-5">
+      <p>2.5</p>
+      <div class="counter">
+        <button>-</button>
+        <input type="text" />
+        <button>+</button>
+      </div>
+      <input type="text" />
+      <input type="checkbox" />
+    </div>
+  </div>
+  <div id="barbell">
+    <div class="plate first"></div>
+    <div class="plate second"></div>
+    <div class="plate third"></div>
+    <div class="plate first-r"></div>
+    <div class="plate second-r"></div>
+    <div class="plate third-r"></div>
+    <div id="bar"></div>
+  </div>
+</body>
+
+</html>
