@@ -71,10 +71,26 @@ label {
 }
 
 input {
+  text-align: center;
   width: 30%;
 }
 
-#barbell {
+.counter {
+  text-align: center;
+}
+
+.counter input[type=number]::-webkit-inner-spin-button,
+.counter input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+canvas { 
+  width: 100vw; 
+  display: block;
+}
+
+/* #barbell {
   padding-block: 6rem;
   position: relative;
 }
@@ -120,4 +136,5 @@ input {
 .third-r {
   top: 25%;
   right: 15%;
-}
+} */
+
