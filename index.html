@@ -11,91 +11,79 @@
 </head>
 
 <body>
-  <form>
-    <h1>Weight to Plate</h1>
-    <div>
-      <label for="target-load">Target Weight Load</label>
-      <input type="number" id="target-load" name="target-load" min="0" step="2.5" />
-      <span>Lb</span>
+  <h1>Weight to Plate</h1>
+  <div>
+    <label for="target-load">Target Weight Load</label>
+    <input type="number" id="target-load" name="target-load" min="0" step="2.5" />
+    <span>Lb</span>
+  </div>
+  <div class="adjust-weight-container">
+    <div class="row col-headers">
+      <p>Weight</p>
+      <p>Per Side</p>
+      <p>Include?</p>
     </div>
-    <div class="adjust-weight-container">
-      <div class="row col-headers">
-        <p>Weight</p>
-        <p>Per Side</p>
-        <p>Total</p>
-        <p>Include?</p>
+    <div class="row weight-45">
+      <p>45</p>
+      <div class="counter">
+        <button class="decrement">-</button>
+        <input class="per-side" type="number" min="0" step="1" value="0" required />
+        <button class="increment">+</button>
       </div>
-      <div class="row weight-45">
-        <p>45</p>
-        <div class="counter">
-          <button class="decrement">-</button>
-          <input type="number" min="0" step="1" value="0" required />
-          <button class="increment">+</button>
-        </div>
-        <input type="number" min="0" step="1" value="0" readonly required />
-        <input type="checkbox" name="include_45" id="include_45" value="1" checked>
-        <label for="include_45"></label>
-      </div>
-      <div class="row weight-35">
-        <p>35</p>
-        <div class="counter">
-          <button class="decrement">-</button>
-          <input type="number" min="0" step="1" value="0" required />
-          <button class="increment">+</button>
-        </div>
-        <input type="number" min="0" step="1" value="0" readonly required />
-        <input type="checkbox" name="include_35" id="include_35" value="1" checked>
-        <label for="include_35"></label>
-      </div>
-      <div class="row weight-25">
-        <p>25</p>
-        <div class="counter">
-          <button class="decrement">-</button>
-          <input type="number" min="0" step="1" value="0" required />
-          <button class="increment">+</button>
-        </div>
-        <input type="number" min="0" step="1" value="0" readonly required />
-        <input type="checkbox" name="include_25" id="include_25" value="1" checked>
-        <label for="include_25"></label>
-      </div>
-      <div class="row weight-10">
-        <p>10</p>
-        <div class="counter">
-          <button class="decrement">-</button>
-          <input type="number" min="0" step="1" value="0" required />
-          <button class="increment">+</button>
-        </div>
-        <input type="number" min="0" step="1" value="0" readonly required />
-        <input type="checkbox" name="include_25" id="include_10" value="1" checked>
-        <label for="include_10"></label>
-      </div>
-      <div class="row weight-5">
-        <p>5</p>
-        <div class="counter">
-          <button class="decrement">-</button>
-          <input type="number" min="0" step="1" value="0" required />
-          <button class="increment">+</button>
-        </div>
-        <input type="number" min="0" step="1" value="0" readonly required />
-        <input type="checkbox" name="include_25" id="include_25" value="1" checked>
-        <label for="include_25"></label>
-      </div>
-      <div class="row weight-2-5">
-        <p>2.5</p>
-        <div class="counter">
-          <button class="decrement">-</button>
-          <input type="number" min="0" step="1" value="0" required />
-          <button class="increment">+</button>
-        </div>
-        <input type="number" min="0" step="1" value="0" readonly required />
-        <input type="checkbox" name="include_2-5" id="include_2-5" value="1" checked>
-        <label for="include_2-5"></label>
-      </div>
+      <input type="checkbox" name="include_45" id="include_45" value="1" checked>
+      <label for="include_45"></label>
     </div>
-    <div>
-      <input type="submit" value="Calculate">
+    <div class="row weight-35">
+      <p>35</p>
+      <div class="counter">
+        <button class="decrement">-</button>
+        <input class="per-side" type="number" min="0" step="1" value="0" required />
+        <button class="increment">+</button>
+      </div>
+      <input type="checkbox" name="include_35" id="include_35" value="1" checked>
+      <label for="include_35"></label>
     </div>
-  </form>
+    <div class="row weight-25">
+      <p>25</p>
+      <div class="counter">
+        <button class="decrement">-</button>
+        <input class="per-side" type="number" min="0" step="1" value="0" required />
+        <button class="increment">+</button>
+      </div>
+      <input type="checkbox" name="include_25" id="include_25" value="1" checked>
+      <label for="include_25"></label>
+    </div>
+    <div class="row weight-10">
+      <p>10</p>
+      <div class="counter">
+        <button class="decrement">-</button>
+        <input class="per-side" type="number" min="0" step="1" value="0" required />
+        <button class="increment">+</button>
+      </div>
+      <input type="checkbox" name="include_25" id="include_10" value="1" checked>
+      <label for="include_10"></label>
+    </div>
+    <div class="row weight-5">
+      <p>5</p>
+      <div class="counter">
+        <button class="decrement">-</button>
+        <input class="per-side" type="number" min="0" step="1" value="0" required />
+        <button class="increment">+</button>
+      </div>
+      <input type="checkbox" name="include_25" id="include_25" value="1" checked>
+      <label for="include_25"></label>
+    </div>
+    <div class="row weight-2-5">
+      <p>2.5</p>
+      <div class="counter">
+        <button class="decrement">-</button>
+        <input class="per-side" type="number" min="0" step="1" value="0" required />
+        <button class="increment">+</button>
+      </div>
+      <input type="checkbox" name="include_2-5" id="include_2-5" value="1" checked>
+      <label for="include_2-5"></label>
+    </div>
+  </div>
   <canvas id="barbell"></canvas>
   <script src="app.js"></script>
 
