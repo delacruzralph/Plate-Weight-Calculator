@@ -1,5 +1,6 @@
 /* TODO:
   - Clean up renderBarbell();
+  - Fix targetLoad and updateInclude
 */
 
 // Model
@@ -37,14 +38,24 @@ const model = {
     if (weight == '2-5') {
       weight = '2.5';
     }
-    this.platesAmt[weight]['amt'] += 1;
+    if (this.platesAmt[weight]['included']) {
+      this.platesAmt[weight]['amt'] += 1;
+      this.targetLoad = parseFloat(this.targetLoad) + (this.platesAmt[weight]['amt'] * weight * 2);
+    }
+    else {
+      this.platesAmt[weight]['amt'] = 0;
+    }
   },
   decrementPlatesAmt: function (weight) {
     if (weight == '2-5') {
       weight = '2.5';
     }
-    if (this.platesAmt[weight]['amt'] > 0) {
+    if (this.platesAmt[weight]['amt'] > 0 && this.platesAmt[weight]['included']) {
       this.platesAmt[weight]['amt'] -= 1;
+      this.targetLoad = parseFloat(this.targetLoad) - (this.platesAmt[weight]['amt'] * weight * 2);
+    }
+    else {
+      this.platesAmt[weight]['amt'] = 0;
     }
   },
   updateIncluded: function (weight, include) {
@@ -146,7 +157,6 @@ const view = {
 
     // Draw the 2.5 lb plates
     for (let i = 0; i < platesAmt['2.5']['amt']; i++) {
-      console.log(platesAmt['2.5']['amt']);
       ctx.fillStyle = "black";
       ctx.fillRect(barbellWidth / 2 - (platesAmt[45]['amt'] * plateMargin) - (platesAmt[35]['amt'] * plateMargin) - (platesAmt[25]['amt'] * plateMargin) - (platesAmt[10]['amt'] * plateMargin) - (platesAmt[5]['amt'] * plateMargin) - (i * plateMargin / 1.5) - barbellMargin + plateWidth2_5 * 1.25, (canvas.height - plateHeight2_5) / 2, plateWidth2_5, plateHeight2_5);
       ctx.fillRect(barbellWidth / 2 + (platesAmt[45]['amt'] * plateMargin) + (platesAmt[35]['amt'] * plateMargin) + (platesAmt[25]['amt'] * plateMargin) + (platesAmt[10]['amt'] * plateMargin) + (platesAmt[5]['amt'] * plateMargin) + (i * plateMargin / 1.5) + (barbellMargin - plateWidth) - plateWidth2_5 * .25, (canvas.height - plateHeight2_5) / 2, plateWidth2_5, plateHeight2_5);
@@ -168,12 +178,18 @@ const controller = {
     view.renderPlatesPerSide(model.platesAmt);
     view.renderTargetWeightLoad(model.platesAmt);
     view.renderBarbell(model.platesAmt);
+    const updatedTargetLoad = document.querySelector('#target-load').value;
+    console.log(updatedTargetLoad);
+    model.updateTargetLoad(updatedTargetLoad);
   },
   incrementValue: (e) => {
     model.incrementPlatesAmt(e.target.classList[1].slice(7));
     view.renderPlatesPerSide(model.platesAmt);
     view.renderTargetWeightLoad(model.platesAmt);
     view.renderBarbell(model.platesAmt);
+    const updatedTargetLoad = document.querySelector('#target-load').value;
+    model.updateTargetLoad(updatedTargetLoad);
+    console.log(updatedTargetLoad);
   },
   updateIncluded: function (updatedWeightIncluded) {
     model.updateIncluded(updatedWeightIncluded.id.slice(8), updatedWeightIncluded.checked);
