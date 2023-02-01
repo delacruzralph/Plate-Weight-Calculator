@@ -60,6 +60,11 @@ body {
   max-width: 36rem;
   text-align: center;
   margin: auto;
+  background-color: aliceblue;
+}
+
+.col-headers {
+  font-weight: bold;
 }
 
 .row {
@@ -67,10 +72,12 @@ body {
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
   justify-items: center;
-  margin-block: 1rem;
+  margin-block: 1.5rem;
 }
 
+
 .target-load-container {
+  text-align: center;
   margin-block: 1.5rem;
 }
 
@@ -79,15 +86,24 @@ label {
 }
 
 input#target-load {
-  width: 75%;
   padding-block: 0.5rem;
   margin-block: .5rem;
   text-align: center;
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+  border-color: royalblue;
+  border-width: 4px;
+  border-style: solid;
 }
 
 input.per-side {
   text-align: center;
   width: 30%;
+  padding-block: 0.2rem;
+  background-color: royalblue;
+  border: none;
+  color: white;
+  border-radius: 0.25rem;
 }
 
 .counter {
@@ -127,11 +143,7 @@ button:active {
 }
 
 input[type=checkbox] {
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  accent-color: gray;
 }
-
-/* TODO:
-  - Style Checkboxes
-  - Styling in General
-*/
