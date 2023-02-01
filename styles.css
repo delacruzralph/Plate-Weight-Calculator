@@ -133,6 +133,7 @@ button {
   font-weight: bold;
   cursor: pointer;
   transition: opacity .15s, background-color .15s;
+  -webkit-appearance: none;
 }
 
 button:hover {
