@@ -179,7 +179,6 @@ const controller = {
     view.renderTargetWeightLoad(model.platesAmt);
     view.renderBarbell(model.platesAmt);
     const updatedTargetLoad = document.querySelector('#target-load').value;
-    console.log(updatedTargetLoad);
     model.updateTargetLoad(updatedTargetLoad);
   },
   incrementValue: (e) => {
@@ -189,7 +188,6 @@ const controller = {
     view.renderBarbell(model.platesAmt);
     const updatedTargetLoad = document.querySelector('#target-load').value;
     model.updateTargetLoad(updatedTargetLoad);
-    console.log(updatedTargetLoad);
   },
   updateIncluded: function (updatedWeightIncluded) {
     model.updateIncluded(updatedWeightIncluded.id.slice(8), updatedWeightIncluded.checked);
