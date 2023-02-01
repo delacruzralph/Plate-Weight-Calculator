@@ -78,8 +78,8 @@ label {
   display: block;
 }
 
-input#target-load{
-  width: 90%;
+input#target-load {
+  width: 75%;
   padding-block: 0.5rem;
   margin-block: .5rem;
   text-align: center;
@@ -100,8 +100,8 @@ input.per-side {
   margin: 0;
 }
 
-canvas { 
-  width: 100vw; 
+canvas {
+  width: 100vw;
   display: block;
 }
 
@@ -126,16 +126,9 @@ button:active {
   background-color: gray;
 }
 
-.decrement {
-  /* background-color: red; */
-}
-
-.increment {
-  /* background-color: green; */
-}
-
 input[type=checkbox] {
-  padding: 2rem;
+  width: 2rem;
+  height: 2rem;
 }
 
 /* TODO:
