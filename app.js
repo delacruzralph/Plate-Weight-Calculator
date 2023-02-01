@@ -1,8 +1,5 @@
 /* TODO:
-  - Add included property to each plate (nested object)
-  - Include? functionality 
-  - Automatically round target weight to nearest 2.5lb
-  - Render barbell
+  - Clean up renderBarbell();
 */
 
 // Model
@@ -149,12 +146,12 @@ const view = {
 
     // Draw the 2.5 lb plates
     for (let i = 0; i < platesAmt['2.5']['amt']; i++) {
+      console.log(platesAmt['2.5']['amt']);
       ctx.fillStyle = "black";
-      ctx.fillRect(barbellWidth / 2 - (platesAmt[45] * plateMargin) - (platesAmt[35] * plateMargin) - (platesAmt[25] * plateMargin) - (platesAmt[10] * plateMargin) - (platesAmt[5] * plateMargin) - (i * plateMargin / 1.5) - barbellMargin + plateWidth2_5 * 1.25, (canvas.height - plateHeight2_5) / 2, plateWidth2_5, plateHeight2_5);
-      ctx.fillRect(barbellWidth / 2 + (platesAmt[45] * plateMargin) + (platesAmt[35] * plateMargin) + (platesAmt[25] * plateMargin) + (platesAmt[10] * plateMargin) + (platesAmt[5] * plateMargin) + (i * plateMargin / 1.5) + (barbellMargin - plateWidth) - plateWidth2_5 * .25, (canvas.height - plateHeight2_5) / 2, plateWidth2_5, plateHeight2_5);
+      ctx.fillRect(barbellWidth / 2 - (platesAmt[45]['amt'] * plateMargin) - (platesAmt[35]['amt'] * plateMargin) - (platesAmt[25]['amt'] * plateMargin) - (platesAmt[10]['amt'] * plateMargin) - (platesAmt[5]['amt'] * plateMargin) - (i * plateMargin / 1.5) - barbellMargin + plateWidth2_5 * 1.25, (canvas.height - plateHeight2_5) / 2, plateWidth2_5, plateHeight2_5);
+      ctx.fillRect(barbellWidth / 2 + (platesAmt[45]['amt'] * plateMargin) + (platesAmt[35]['amt'] * plateMargin) + (platesAmt[25]['amt'] * plateMargin) + (platesAmt[10]['amt'] * plateMargin) + (platesAmt[5]['amt'] * plateMargin) + (i * plateMargin / 1.5) + (barbellMargin - plateWidth) - plateWidth2_5 * .25, (canvas.height - plateHeight2_5) / 2, plateWidth2_5, plateHeight2_5);
     }
   }
-
 }
 
 const controller = {
