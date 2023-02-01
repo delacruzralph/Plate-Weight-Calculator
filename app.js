@@ -1,64 +1,118 @@
-let targetLoad = document.querySelector('#target-load');
-targetLoad.addEventListener('input', function (event) {
-  const inputValue = event.target.value;
-  targetLoad = inputValue;
-  calcPlates();
-});
+/* TODO:
+  - Add included property to each plate (nested object)
+  - Include? functionality 
+  - Automatically round target weight to nearest 2.5lb
+  - Render barbell
+*/
 
-function calcPlates() {
-  weight45Counter = Math.floor((targetLoad - 45) / 45 / 2);
-  weight35Counter = Math.floor((targetLoad - 45 - weight45Counter * 45 * 2) / 35 / 2);
-  weight25Counter = Math.floor((targetLoad - 45 - weight45Counter * 45 * 2 - weight35Counter * 35 * 2) / 25 / 2);
-  weight10Counter = Math.floor((targetLoad - 45 - weight45Counter * 45 * 2 - weight35Counter * 35 * 2 - weight25Counter * 25 * 2) / 10 / 2);
-  weight5Counter = Math.floor((targetLoad - 45 - weight45Counter * 45 * 2 - weight35Counter * 35 * 2 - weight25Counter * 25 * 2 - weight10Counter * 10 * 2) / 5 / 2);
-  weight2_5Counter = Math.floor((targetLoad - 45 - weight45Counter * 45 * 2 - weight35Counter * 35 * 2 - weight25Counter * 25 * 2 - weight10Counter * 10 * 2 - weight5Counter * 5 * 2) / 2.5 / 2);
-  document.querySelector(".weight-45 .counter input").value = weight45Counter;
-  document.querySelector(".weight-35 .counter input").value = weight35Counter;
-  document.querySelector(".weight-25 .counter input").value = weight25Counter;
-  document.querySelector(".weight-10 .counter input").value = weight10Counter;
-  document.querySelector(".weight-5 .counter input").value = weight5Counter;
-  document.querySelector(".weight-2-5 .counter input").value = weight2_5Counter;
-  render();
-}
+// Model
+// let targetLoad;
+// let plateCounter; 
+// updatePlateCounter(id);
+// updateTargetLoad(weight);
+// updatePlatesPerSide(targetLoad);
 
-let decrementButtons = document.querySelectorAll(".decrement");
-decrementButtons.forEach(function (btn) {
-  btn.addEventListener('click', function () {
-    decrementValue(this.nextElementSibling);
-  });
-});
+// View
+// renderTargetLoad();
+// renderPlatesPerSide();
+// renderBarbell();
 
-let incrementButtons = document.querySelectorAll(".increment");
-incrementButtons.forEach(function (btn) {
-  btn.addEventListener('click', function () {
-    incrementValue(this.previousElementSibling);
-  });
-});
+// Controller
+// incrementPlatesPerSide(weight)
+// decrementPlatesPerSide(weight)
+// handleTargetLoadInput();
 
-function incrementValue(element) {
-  element.value = parseInt(element.value, 10) + 1;
-  weight45Counter = document.querySelector(".weight-45 .counter input").value;
-  weight35Counter = document.querySelector(".weight-35 .counter input").value;
-  weight25Counter = document.querySelector(".weight-25 .counter input").value;
-  weight10Counter = document.querySelector(".weight-10 .counter input").value;
-  weight5Counter = document.querySelector(".weight-5 .counter input").value;
-  weight2_5Counter = document.querySelector(".weight-2-5 .counter input").value;
-
-  render();
-}
-
-function decrementValue(element) {
-  if (element.value > 0) {
-    element.value = parseInt(element.value, 10) - 1;
-    weight45Counter = document.querySelector(".weight-45 .counter input").value;
-    weight35Counter = document.querySelector(".weight-35 .counter input").value;
-    weight25Counter = document.querySelector(".weight-25 .counter input").value;
-    weight10Counter = document.querySelector(".weight-10 .counter input").value;
-    weight5Counter = document.querySelector(".weight-5 .counter input").value;
-    weight2_5Counter = document.querySelector(".weight-2-5 .counter input").value;
-    render();
+const model = {
+  targetLoad: 0,
+  updateTargetLoad: function (updatedTargetLoad) {
+    this.targetLoad = updatedTargetLoad;
+    console.log(this.targetLoad);
+    this.calcPlates();
+  },
+  platesAmt: {
+    45: {amt: 0, included: true},
+    35: 0,
+    25: 0,
+    10: 0,
+    5: 0,
+    '2-5': 0
+  },
+  incrementPlatesAmt: function (weight) {
+    this.platesAmt[weight] += 1;
+  },
+  decrementPlatesAmt: function (weight) {
+    if (this.platesAmt[weight] > 0) {
+      this.platesAmt[weight] -= 1;
+    }
+  },
+  calcPlates: function () {
+    this.platesAmt[45]['amt'] = Math.floor((this.targetLoad - 45) / 45 / 2);
+    this.platesAmt[35] = Math.floor((this.targetLoad - 45 - this.platesAmt[45]['amt'] * 45 * 2) / 35 / 2);
+    this.platesAmt[25] = Math.floor((this.targetLoad - 45 - this.platesAmt[45]['amt'] * 45 * 2 - this.platesAmt[35] * 35 * 2) / 25 / 2);
+    this.platesAmt[10] = Math.floor((this.targetLoad - 45 - this.platesAmt[45]['amt'] * 45 * 2 - this.platesAmt[35] * 35 * 2 - this.platesAmt[25] * 25 * 2) / 10 / 2);
+    this.platesAmt[5] = Math.floor((this.targetLoad - 45 - this.platesAmt[45]['amt'] * 45 * 2 - this.platesAmt[35] * 35 * 2 - this.platesAmt[25] * 25 * 2 - this.platesAmt[10] * 10 * 2) / 5 / 2);
+    this.platesAmt['2-5'] = Math.floor((this.targetLoad - 45 - this.platesAmt[45]['amt'] * 45 * 2 - this.platesAmt[35] * 35 * 2 - this.platesAmt[25] * 25 * 2 - this.platesAmt[10] * 10 * 2 - this.platesAmt[5] * 5 * 2) / 2.5 / 2);
+    console.log(this.platesAmt);
   }
 }
+
+const view = {
+  renderPlatesPerSide: function (platesAmt) {
+    document.querySelector(".weight-45 .counter input").value = platesAmt[45]['amt'];
+    document.querySelector(".weight-35 .counter input").value = platesAmt[35];
+    document.querySelector(".weight-25 .counter input").value = platesAmt[25];
+    document.querySelector(".weight-10 .counter input").value = platesAmt[10];
+    document.querySelector(".weight-5 .counter input").value = platesAmt[5];
+    document.querySelector(".weight-2-5 .counter input").value = platesAmt['2-5'];
+  },
+  renderTargetWeightLoad: function (platesAmt) {
+    document.querySelector('#target-load').value = 45 + 2 * (platesAmt[45] * 45 + platesAmt[35] * 35 + platesAmt[25] * 25 + platesAmt[10] * 10 + platesAmt[5] * 5 + platesAmt['2-5'] * 2.5);
+  }
+
+}
+
+const controller = {
+  updateTargetLoad: function (updatedTargetLoad) {
+    model.updateTargetLoad(updatedTargetLoad);
+    view.renderPlatesPerSide(model.platesAmt);
+  },
+  handleTargetLoadInput: function (e) {
+    this.updateTargetLoad(e.target.value);
+  },
+  decrementValue: (e) => {
+    model.decrementPlatesAmt(e.target.classList[1].slice(7));
+    view.renderPlatesPerSide(model.platesAmt);
+    view.renderTargetWeightLoad(model.platesAmt);
+  },
+  incrementValue: (e) => {
+    model.incrementPlatesAmt(e.target.classList[1].slice(7));
+    view.renderPlatesPerSide(model.platesAmt);
+    view.renderTargetWeightLoad(model.platesAmt);
+  }
+}
+
+/* =============
+   EVENT LISTENERS
+   ============= */
+
+// Target Weight Load
+document.querySelector('#target-load').addEventListener('input', function (e) {
+  controller.handleTargetLoadInput(e);
+});
+
+// Decrement Per Side
+document.querySelectorAll(".decrement").forEach(function (btn) {
+  btn.addEventListener('click', function (e) {
+    controller.decrementValue(e);
+  });
+});
+
+// Increment Per Side
+document.querySelectorAll(".increment").forEach(function (btn) {
+  btn.addEventListener('click', function (e) {
+    controller.incrementValue(e);
+  });
+});
 
 // Get the canvas element
 const canvas = document.getElementById("barbell");
