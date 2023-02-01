@@ -26,47 +26,61 @@ const model = {
   targetLoad: 0,
   updateTargetLoad: function (updatedTargetLoad) {
     this.targetLoad = updatedTargetLoad;
-    console.log(this.targetLoad);
     this.calcPlates();
   },
   platesAmt: {
-    45: {amt: 0, included: true},
-    35: 0,
-    25: 0,
-    10: 0,
-    5: 0,
-    '2-5': 0
+    45: { amt: 0, included: true },
+    35: { amt: 0, included: true },
+    25: { amt: 0, included: true },
+    10: { amt: 0, included: true },
+    5: { amt: 0, included: true },
+    '2.5': { amt: 0, included: true },
   },
   incrementPlatesAmt: function (weight) {
-    this.platesAmt[weight] += 1;
+    if (weight == '2-5') {
+      weight = '2.5';
+    }
+    this.platesAmt[weight]['amt'] += 1;
   },
   decrementPlatesAmt: function (weight) {
-    if (this.platesAmt[weight] > 0) {
-      this.platesAmt[weight] -= 1;
+    if (weight == '2-5') {
+      weight = '2.5';
+    }
+    if (this.platesAmt[weight]['amt'] > 0) {
+      this.platesAmt[weight]['amt'] -= 1;
     }
   },
+  updateIncluded: function (weight, include) {
+    if (weight == '2-5') {
+      weight = '2.5';
+    }
+    this.platesAmt[weight]['included'] = include;
+    this.calcPlates();
+    console.log(weight);
+    console.log(include);
+  },
   calcPlates: function () {
-    this.platesAmt[45]['amt'] = Math.floor((this.targetLoad - 45) / 45 / 2);
-    this.platesAmt[35] = Math.floor((this.targetLoad - 45 - this.platesAmt[45]['amt'] * 45 * 2) / 35 / 2);
-    this.platesAmt[25] = Math.floor((this.targetLoad - 45 - this.platesAmt[45]['amt'] * 45 * 2 - this.platesAmt[35] * 35 * 2) / 25 / 2);
-    this.platesAmt[10] = Math.floor((this.targetLoad - 45 - this.platesAmt[45]['amt'] * 45 * 2 - this.platesAmt[35] * 35 * 2 - this.platesAmt[25] * 25 * 2) / 10 / 2);
-    this.platesAmt[5] = Math.floor((this.targetLoad - 45 - this.platesAmt[45]['amt'] * 45 * 2 - this.platesAmt[35] * 35 * 2 - this.platesAmt[25] * 25 * 2 - this.platesAmt[10] * 10 * 2) / 5 / 2);
-    this.platesAmt['2-5'] = Math.floor((this.targetLoad - 45 - this.platesAmt[45]['amt'] * 45 * 2 - this.platesAmt[35] * 35 * 2 - this.platesAmt[25] * 25 * 2 - this.platesAmt[10] * 10 * 2 - this.platesAmt[5] * 5 * 2) / 2.5 / 2);
-    console.log(this.platesAmt);
+    const weights = [45, 35, 25, 10, 5, 2.5];
+    let remainingWeight = this.targetLoad - 45;
+
+    weights.forEach(weight => {
+      this.platesAmt[weight]['amt'] = this.platesAmt[weight]['included'] ? Math.floor(remainingWeight / weight / 2) : 0;
+      remainingWeight -= this.platesAmt[weight]['amt'] * weight * 2;
+    });
   }
 }
 
 const view = {
   renderPlatesPerSide: function (platesAmt) {
     document.querySelector(".weight-45 .counter input").value = platesAmt[45]['amt'];
-    document.querySelector(".weight-35 .counter input").value = platesAmt[35];
-    document.querySelector(".weight-25 .counter input").value = platesAmt[25];
-    document.querySelector(".weight-10 .counter input").value = platesAmt[10];
-    document.querySelector(".weight-5 .counter input").value = platesAmt[5];
-    document.querySelector(".weight-2-5 .counter input").value = platesAmt['2-5'];
+    document.querySelector(".weight-35 .counter input").value = platesAmt[35]['amt'];
+    document.querySelector(".weight-25 .counter input").value = platesAmt[25]['amt'];
+    document.querySelector(".weight-10 .counter input").value = platesAmt[10]['amt'];
+    document.querySelector(".weight-5 .counter input").value = platesAmt[5]['amt'];
+    document.querySelector(".weight-2-5 .counter input").value = platesAmt['2.5']['amt'];
   },
   renderTargetWeightLoad: function (platesAmt) {
-    document.querySelector('#target-load').value = 45 + 2 * (platesAmt[45] * 45 + platesAmt[35] * 35 + platesAmt[25] * 25 + platesAmt[10] * 10 + platesAmt[5] * 5 + platesAmt['2-5'] * 2.5);
+    document.querySelector('#target-load').value = 45 + 2 * (platesAmt[45]['amt'] * 45 + platesAmt[35]['amt'] * 35 + platesAmt[25]['amt'] * 25 + platesAmt[10]['amt'] * 10 + platesAmt[5]['amt'] * 5 + platesAmt['2.5']['amt'] * 2.5);
   }
 
 }
@@ -88,6 +102,14 @@ const controller = {
     model.incrementPlatesAmt(e.target.classList[1].slice(7));
     view.renderPlatesPerSide(model.platesAmt);
     view.renderTargetWeightLoad(model.platesAmt);
+  },
+  updateIncluded: function (updatedWeightIncluded) {
+    model.updateIncluded(updatedWeightIncluded.id.slice(8), updatedWeightIncluded.checked);
+    view.renderPlatesPerSide(model.platesAmt);
+    view.renderTargetWeightLoad(model.platesAmt);
+  },
+  handleIncludeInput: function (e) {
+    this.updateIncluded(e.target);
   }
 }
 
@@ -111,6 +133,13 @@ document.querySelectorAll(".decrement").forEach(function (btn) {
 document.querySelectorAll(".increment").forEach(function (btn) {
   btn.addEventListener('click', function (e) {
     controller.incrementValue(e);
+  });
+});
+
+// Include Checkbox
+document.querySelectorAll('input[type="checkbox"]').forEach(function (check) {
+  check.addEventListener('click', function (e) {
+    controller.handleIncludeInput(e);
   });
 });
 
